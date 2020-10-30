@@ -1,0 +1,48 @@
+{
+  "_from": "react-native-ftp",
+  "_id": "react-native-ftp@1.0.1",
+  "_inBundle": false,
+  "_integrity": "sha512-G6cGU/SkyKFnkpTTfhUE+l4ZlAxm/dEYhWGbrWlV/iFPFwdnh+sSNMqHH6GX9EfF1QtsgeTQibOepT6kQTdNJw==",
+  "_location": "/react-native-ftp",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "react-native-ftp",
+    "name": "react-native-ftp",
+    "escapedName": "react-native-ftp",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/react-native-ftp/-/react-native-ftp-1.0.1.tgz",
+  "_shasum": "8039fb3b38a7e281e0881afb768674fa630433c4",
+  "_spec": "react-native-ftp",
+  "_where": "/home/igor/projects/ftp-test",
+  "author": {
+    "name": "ne0z",
+    "email": "ne0z@initrd.me"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "FTP client library for android",
+  "keywords": [
+    "react-native",
+    "ftp",
+    "network"
+  ],
+  "license": "GPL-3.0",
+  "main": "index.js",
+  "name": "react-native-ftp",
+  "peerDependencies": {
+    "react-native": "^0.41.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "1.0.1"
+}
