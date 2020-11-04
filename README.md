@@ -6,16 +6,16 @@ Currently tested to work on Android
 
 ## Getting started
 
-`$ npm install react-native-ftps --save`
+`$ npm install https://github.com/igorjos/react-native-ftps.git --save`
 
 ### Mostly automatic installation
 
-`$ react-native link react-native-ftp`
+`$ react-native link react-native-ftps`
 
 ### Manual installation
 
 
-#### iOS
+#### iOS (not tested)
 
 1. In XCode, in the project navigator, right click `Libraries` ➜ `Add Files to [your project's name]`
 2. Go to `node_modules` ➜ `react-native-ftp` and add `RNFtp.xcodeproj`
@@ -37,7 +37,7 @@ Currently tested to work on Android
       compile project(':react-native-ftp')
   	```
 
-#### Windows
+#### Windows (not tested)
 [Read it! :D](https://github.com/ReactWindows/react-native)
 
 1. In Visual Studio add the `RNFtp.sln` in `node_modules/react-native-ftp/windows/RNFtp.sln` folder to their solution, reference from their app.
