@@ -7,6 +7,7 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.Callback;
 
+import org.apache.commons.net.PrintCommandListener;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPSClient;
 import org.apache.commons.net.ftp.FTPFile;
@@ -23,14 +24,20 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocket;
 
 public class RNFtpModule extends ReactContextBaseJavaModule {
 
   private final ReactApplicationContext reactContext;
-  private String ip_address;
-  private int port;
-  private FTPSClient client;
-  private boolean is_tls;
+  private static String ip_address;
+  private static int port;
+  private static FTPSClient client;
+  private static boolean is_tls;
 
   public RNFtpModule(ReactApplicationContext reactContext) {
     super(reactContext);
@@ -39,18 +46,22 @@ public class RNFtpModule extends ReactContextBaseJavaModule {
 
   @ReactMethod
   public void setup(String ip_address, int port, boolean is_tls){
-    this.is_tls = is_tls;
-    this.ip_address = ip_address;
-    this.port = port;
+    
+    RNFtpModule.is_tls = is_tls;
+    RNFtpModule.ip_address = ip_address;
+    RNFtpModule.port = port;
 
-    if(this.is_tls == true)
+    if(RNFtpModule.is_tls == true)
     {
-      this.client = new FTPSClient("TLS", true); //Will force the use of TLS - implicit
+      System.out.println("Using Implicit");
+      RNFtpModule.client = new FTPSClient(true); //Will force the use of TLS - implicit
     }
     else
     {
-      this.client = new FTPSClient(); //Will use explicit
+      System.out.println("Using Explicit");
+      RNFtpModule.client = new FTPSClient(false); //Will use explicit
     }
+
   }
 
   @ReactMethod
@@ -72,14 +83,17 @@ public class RNFtpModule extends ReactContextBaseJavaModule {
       @Override
       public void run() {
         try {
-          
-          client.setRemoteVerificationEnabled(false);
-          client.setTrustManager(TrustManagerUtils.getAcceptAllTrustManager()); 
+
+          client.addProtocolCommandListener(
+    new PrintCommandListener(new PrintWriter(System.out), true));
+
+          //client.setRemoteVerificationEnabled(false);
+          client.setTrustManager(TrustManagerUtils.getAcceptAllTrustManager());
           
           //client.setControlEncoding("UTF-8")
-          client.connect(this.ip_address,this.port);
+          client.connect(RNFtpModule.ip_address,RNFtpModule.port);
           client.setSoTimeout(2000);
-
+          
           if ( ! FTPReply.isPositiveCompletion(client.getReplyCode()) ) {
 
             client.disconnect();
@@ -87,9 +101,11 @@ public class RNFtpModule extends ReactContextBaseJavaModule {
           }
 
           client.enterLocalPassiveMode();
-          
+
           if(client.login(username, password))
           {
+            client.execPBSZ(0);
+            client.execPROT("P");
             // logger.debug("Logged successfully on FTP");
             promise.resolve(true);
           }
@@ -286,3 +302,4 @@ public class RNFtpModule extends ReactContextBaseJavaModule {
     return "FTP";
   }
 }
+
