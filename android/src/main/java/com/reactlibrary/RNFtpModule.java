@@ -27,10 +27,10 @@ import java.io.OutputStream;
 public class RNFtpModule extends ReactContextBaseJavaModule {
 
   private final ReactApplicationContext reactContext;
-  private static String ip_address;
-  private static int port;
-  private static FTPSClient client;
-  private static boolean is_tls;
+  private String ip_address;
+  private int port;
+  private FTPSClient client;
+  private boolean is_tls;
 
   public RNFtpModule(ReactApplicationContext reactContext) {
     super(reactContext);
@@ -75,8 +75,9 @@ public class RNFtpModule extends ReactContextBaseJavaModule {
           
           client.setRemoteVerificationEnabled(false);
           client.setTrustManager(TrustManagerUtils.getAcceptAllTrustManager()); 
+          
           //client.setControlEncoding("UTF-8")
-          client.connect(RNFtpModule.this.ip_address,RNFtpModule.this.port);
+          client.connect(this.ip_address,this.port);
           client.setSoTimeout(2000);
 
           if ( ! FTPReply.isPositiveCompletion(client.getReplyCode()) ) {
