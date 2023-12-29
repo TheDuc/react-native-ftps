@@ -21,8 +21,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "version": "1.0.2",
+  "version": "1.0.3",
   "repository": {
-    "url": "https://github.com/igorjos/react-native-ftps.git"
+    "url": "https://github.com/TheDuc/react-native-ftps"
   }
 }
